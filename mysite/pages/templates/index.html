@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <title>Vault of Secrets</title>
+</head>
+
+<body>
+    <h1>Vault of Secrets</h1>
+
+    <h2>Create a new secret</h2>
+
+    <h3>Provide your username of choice, your secret and a key for reading your secret</h3>
+    <form action='addsecret/' method="POST">
+        {% csrf_token %}
+        <p>User:</p>
+        <input type="text" name="user"/>
+        <br/>
+        <p>Your secret:</p>
+        <input type="text" name="rawsecret"/>
+        <br/>
+        <p>Secret key:</p>
+        <input type="text" name="secretkey"/>
+        <br/>
+        <input type="submit" value="Send"/>
+    </form>
+
+    <h2>Read your secret:</h2>
+
+    <form action='secretpath/' method="POST">
+        {% csrf_token %}
+        <p>Secret key:</p>
+        <input type="text" name="secretkey"/>
+        <br/>
+        <input type="submit" value="Send"/>
+    </form>
+
+
+    <h2>Website users:</h2>
+
+    <ul>
+		{% for s in secrets %}
+
+		<li>{{s.hashedsecret}}
+		</li>
+
+		{% endfor %}
+	</ul>
+
+</body>
