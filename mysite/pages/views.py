@@ -20,15 +20,15 @@ def addSecretView(request):
     rawsecret = request.POST.get('rawsecret')
     secretkey = request.POST.get('secretkey')
 
-    hashedsecret = []
+    encryptedsecret = []
 
     for letter in rawsecret:
         idx = letters.find(letter)
-        hashedsecret.append(lettersreversed[idx])
+        encryptedsecret.append(lettersreversed[idx])
     
-    hashedsecret = ''.join(hashedsecret)
+    encryptedsecret = ''.join(encryptedsecret)
 
-    Secret.objects.create(user=user, rawsecret=rawsecret, hashedsecret=hashedsecret, secretkey=secretkey)
+    Secret.objects.create(user=user, rawsecret=rawsecret, encryptedsecret=encryptedsecret, secretkey=secretkey)
 
     return redirect('/')
 
@@ -45,7 +45,7 @@ def userPageView(request, user):
 
     for secret in Secret.objects.all():
         if user == secret.user:
-            secretlist.append(secret.hashedsecret)
+            secretlist.append(secret.encryptedsecret)
     
     return HttpResponse('</br>'.join(secretlist))
 
